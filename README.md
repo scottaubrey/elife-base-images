@@ -3,7 +3,7 @@
 ## Available images
 
 - `php_cli`
-- [TODO] `php_fpm`
+- `php_fpm`
 
 ## Basic infrastructure
 
