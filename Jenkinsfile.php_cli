@@ -16,6 +16,7 @@ elifePipeline {
 
             stage 'Sanity tests', {
                 sh 'docker run -it elifesciences/php_cli -r "echo 42, PHP_EOL;"'
+                sh 'docker run -it elifesciences/php_cli composer -V'
             }
 
             elifeMainlineOnly {

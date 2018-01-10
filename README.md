@@ -10,4 +10,5 @@
 - Every image has an `elife` user that should own files
 - Every image has a `www-data` user that should run all processes
 - PHP images provide `composer`
+- Images are tested for sanity, e.g. the PHP interpreter runs without issues.
 
