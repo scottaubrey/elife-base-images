@@ -1,0 +1,31 @@
+elifePipeline {
+    elifeOnNode(
+        {
+            def commit
+            def tag
+            stage 'Checkout', {
+                checkout scm
+                commit = elifeGitRevision()
+                tag = elifeDateTimeTag()
+            }
+
+            stage 'Build image', {
+                checkout scm
+                sh 'docker build -f Dockerfile.php_cli -t elifesciences/php_cli .'
+            }
+
+            stage 'Sanity tests', {
+                sh 'docker run -it elifesciences/php_cli -r "echo 42, PHP_EOL;"'
+                sh 'docker run -it elifesciences/php_cli composer -V'
+            }
+
+            elifeMainlineOnly {
+                stage 'Push image', {
+                    sh "docker tag elifesciences/php_cli:${tag} && docker push elifesciences/php_cli:${tag}"
+                    sh "docker tag elifesciences/php_cli:latest && docker push elifesciences/php_cli:latest"
+                }
+            }
+        },
+        'elife-libraries--ci'
+    )
+}
