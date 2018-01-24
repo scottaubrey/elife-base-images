@@ -10,7 +10,6 @@ elifePipeline {
             }
 
             stage 'Build image', {
-                checkout scm
                 sh "docker build -f Dockerfile.php_cli -t elifesciences/php_cli:${tag} ."
             }
 
