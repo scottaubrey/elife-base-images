@@ -11,18 +11,18 @@ elifePipeline {
 
             stage 'Build image', {
                 checkout scm
-                sh 'docker build -f Dockerfile.php_fpm -t elifesciences/php_fpm .'
+                sh "docker build -f Dockerfile.php_fpm -t elifesciences/php_fpm:${tag} ."
             }
 
             stage 'Sanity tests', {
-                sh 'docker run -it elifesciences/php_fpm /usr/bin/env php -r "echo 42, PHP_EOL;"'
-                sh 'docker run -it elifesciences/php_fpm composer -V'
+                sh "docker run -it elifesciences/php_fpm:${tag} /usr/bin/env php -r "echo 42, PHP_EOL;""
+                sh "docker run -it elifesciences/php_fpm:${tag} composer -V"
             }
 
             elifeMainlineOnly {
                 stage 'Push image', {
-                    sh "docker tag elifesciences/php_fpm:${tag} && docker push elifesciences/php_fpm:${tag}"
-                    sh "docker tag elifesciences/php_fpm:latest && docker push elifesciences/php_fpm:latest"
+                    sh "docker push elifesciences/php_fpm:${tag}"
+                    sh "docker tag elifesciences/php_fpm:${tag} elifesciences/php_fpm:latest && docker push elifesciences/php_fpm:latest"
                 }
             }
         },
