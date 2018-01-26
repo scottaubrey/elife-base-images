@@ -5,8 +5,11 @@ RUN apt-get update && apt-get install -y git-core zip
 
 RUN useradd -ms /bin/bash -G www-data elife && \
     chown elife:elife /srv && \
+    mkdir /srv/bin && \
+    chown elife:elife /srv/bin && \
     mkdir -p /var/www && \
     chown www-data:www-data /var/www
+ENV PATH=/srv/bin:${PATH}
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/install-composer.sh
