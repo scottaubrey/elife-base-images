@@ -1,9 +1,12 @@
 FROM php:7.0-fpm-jessie
-RUN useradd -ms /bin/bash -G www-data elife
-RUN mkdir -p /var/www && chown www-data:www-data /var/www
 
-RUN apt-get update && apt-get install -y git-core zip
 # TODO: try apt-get clean
+RUN apt-get update && apt-get install -y git-core zip
+
+RUN useradd -ms /bin/bash -G www-data elife && \
+    chown elife:elife /srv && \
+    mkdir -p /var/www && \
+    chown www-data:www-data /var/www
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/install-composer.sh
