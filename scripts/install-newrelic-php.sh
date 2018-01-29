@@ -9,7 +9,6 @@ curl https://download.newrelic.com/548C16BF.gpg | apt-key add -
 apt-get update && apt-get install -y newrelic-php5
 
 NR_INSTALL_SILENT="set-any-value-to-enable" \
-#NR_INSTALL_KEY="fake-license" \
 newrelic-install install
 
 # adapted from https://discuss.newrelic.com/t/php-agent-configuration-in-docker-containers/41499/3
