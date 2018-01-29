@@ -12,6 +12,7 @@ RUN useradd -ms /bin/bash -G www-data elife && \
 ENV PATH=/srv/bin:${PATH}
 
 COPY scripts/ /root/scripts
+RUN /root/scripts/install-newrelic-php.sh
 RUN /root/scripts/install-composer.sh
 
 USER www-data
