@@ -25,6 +25,8 @@ Every image should provide a `elife` and a `www-data` user:
 
 ## Consequences
 
+`/srv/` should be property of `elife` which will build applications there.
+
 Compromise `www-data` processes won't be able to rewrite the application code.
 
 No container will be running as `root` or even `elife`.
