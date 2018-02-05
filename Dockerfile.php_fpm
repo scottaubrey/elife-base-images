@@ -1,7 +1,10 @@
 FROM php:7.0-fpm-jessie
 
 # TODO: try apt-get clean
-RUN apt-get update && apt-get install -y git-core zip
+RUN apt-get update && apt-get install -y \
+    git-core \
+    libfcgi0ldbl \
+    zip
 
 RUN useradd -ms /bin/bash -G www-data elife && \
     chown elife:elife /srv && \
@@ -12,6 +15,7 @@ RUN useradd -ms /bin/bash -G www-data elife && \
 ENV PATH=/srv/bin:${PATH}
 
 COPY scripts/ /root/scripts
+COPY utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 RUN /root/scripts/install-composer.sh
 
