@@ -22,6 +22,6 @@ Every image should provide a standard `/srv/bin` folder, on the PATH, containing
 
 ## Consequences
 
-Using tools from inside a container image or on a `run` command should be as simple as `proofreader src`.
+Using tools from inside a container image or on a `run` command should be as simple as `command arg1 arg2` (calling `/srv/bin/command`).
 
 Multi-stage builds should be minimal, just copying a file from another image to `/srv/bin`.
