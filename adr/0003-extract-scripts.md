@@ -16,7 +16,7 @@ Dockerfiles make no provision for extracting duplication of steps unless they ar
 
 ## Decision
 
-Extract long `RUN` steps (or sequences of steps) into a bash script.
+Extract long `RUN` steps (or sequences of steps) into a bash script. If the script is only to be used by `root`, place it in `/root/scripts`.
 
 ## Consequences
 
