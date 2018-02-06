@@ -6,7 +6,7 @@ elifePipeline {
             stage 'Checkout', {
                 checkout scm
                 commit = elifeGitRevision()
-                tag = elifeDateTimeTag()
+                tag = commit
             }
 
             stage 'Build image', {
