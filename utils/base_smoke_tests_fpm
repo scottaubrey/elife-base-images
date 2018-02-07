@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+PROJECT_FOLDER=/var/www/html PHP_ENTRYPOINT=hello_world.php assert_fpm / "Hello world"
