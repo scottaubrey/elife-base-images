@@ -14,7 +14,7 @@ elifePipeline {
                 for (int i= 0; i < images.size(); i++) {
                     def image = images.get(i);
                     actions[image] = {
-                        sh "docker build -f Dockerfile.${image} -t ${image}:${commit} ."
+                        sh "docker build -f Dockerfile.${image} -t $elifesciences/{image}:${commit} ."
                     }
                 }
                 parallel actions
