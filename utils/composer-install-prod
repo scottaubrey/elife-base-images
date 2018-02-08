@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+exec composer --no-interaction install --no-suggest --no-dev --no-autoloader
