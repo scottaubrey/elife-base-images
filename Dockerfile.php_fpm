@@ -18,6 +18,6 @@ COPY scripts/ /root/scripts
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 RUN /root/scripts/install-composer.sh
-COPY --chown=elife:elife hello_world.php /var/www/html/
+COPY --chown=elife:elife ping.php /var/www/html/
 
 USER www-data
