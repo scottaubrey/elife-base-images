@@ -34,7 +34,7 @@ if [ -z "$status" ]; then
     status=200
 fi
 echo "Status: $status"
-if [ $status -gt 399 ]; then
+if [ $status -gt 299 ]; then
     fail
 fi
 
