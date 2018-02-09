@@ -6,4 +6,6 @@ if [ -z "$DEBUG" ]; then
 else
     composer --no-interaction dump-autoload
 fi
-composer run-script post-install-cmd
+if composer run-script --list | grep post-install-cmd; then
+    composer run-script post-install-cmd
+fi
