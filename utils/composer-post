@@ -3,13 +3,7 @@ set -e
 set -o pipefail
 
 if [ -z "$DEBUG" ]; then
-    composer --no-interaction dump-autoload --no-dev --classmap-authoritative
+    composer --no-interaction install --no-suggest --no-dev --classmap-authoritative
 else
-    composer --no-interaction dump-autoload
-fi
-if ! composer run-script post-install-cmd >/tmp/post-install-cmd.log 2>&1; then
-    if ! grep 'Script "post-install-cmd" is not defined in this package' /tmp/post-install-cmd.log; then
-        cat /tmp/post-install-cmd.log
-        exit 1
-    fi
+    composer --no-interaction install --no-suggest 
 fi
