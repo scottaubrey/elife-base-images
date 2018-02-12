@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+PROJECT_FOLDER=/var/www/html PHP_ENTRYPOINT=ping.php assert_fpm / "pong"

@@ -1,0 +1,47 @@
+#!/bin/bash
+set -e
+
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 PATH"
+    echo "Example: $0 /ping"
+    exit 1
+fi
+
+if [ -z "${PROJECT_FOLDER}" ]; then
+    echo "PROJECT_FOLDER environment variable must be set"
+    echo "Example: PROJECT_FOLDER=/srv/annotations"
+    exit 1
+fi
+
+if [ -z "${PHP_ENTRYPOINT}" ]; then
+    echo "PHP_ENTRYPOINT environment variable must be set"
+    echo "Example: PHP_ENTRYPOINT=web/app.php"
+    exit 1
+fi
+
+path="$1"
+text="$2"
+
+output=$(SCRIPT_FILENAME="${PROJECT_FOLDER}/${PHP_ENTRYPOINT}" REQUEST_URI="${path}" REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000)
+fail() {
+    echo "---Full output follows---"
+    echo "${output}"
+    exit 2
+}
+
+status=$(echo "${output}" | grep -o "Status: [0-9]\+ " | sed -e "s/[^0-9]\+//g")
+if [ -z "$status" ]; then
+    status=200
+fi
+echo "Status: $status"
+if [ $status -gt 299 ]; then
+    fail
+fi
+
+if [ ! -z "$text" ]; then
+    body=$(echo "${output}" | awk 'p; /^\r$/ {p=1}')
+    echo "Body: $body"
+    if [ "$text" != "${body}" ]; then
+        fail
+    fi
+fi
