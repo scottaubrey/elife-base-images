@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+if [ -z "$DEBUG" ]; then
+    composer --no-interaction install --no-suggest --no-dev --classmap-authoritative
+else
+    composer --no-interaction install --no-suggest 
+fi

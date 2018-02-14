@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+if [ -z "$DEBUG" ]; then
+    exec composer --no-interaction install --no-suggest --no-dev --no-autoloader --no-scripts
+else
+    exec composer --no-interaction install --no-suggest --no-autoloader --no-scripts
+fi

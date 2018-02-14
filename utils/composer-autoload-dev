@@ -1,4 +1,0 @@
-#!/bin/bash
-set -e
-
-exec composer --no-interaction dump-autoload --classmap-authoritative
