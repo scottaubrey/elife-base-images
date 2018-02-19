@@ -20,7 +20,7 @@ Real projects also have various volumes that need to be mounted for them to func
 
 ## Decision
 
-Use a single docker image to ship dummy projects.
+By default, use a single docker image to ship dummy projects. Provide additional options for setup if needed to satisfy other requirements.
 
 Use one or more `docker-compose.yml` files to build and deploy real projects.
 
@@ -31,6 +31,8 @@ Every dummy project should be set up by simply running:
 ```
 docker run [-p 8080:80] elifesciences/*_dummy
 ```
+
+although it can have multiple variants of its image that cater to more complex and/or optimized setups.
 
 Real projects should be set up by running:
 
