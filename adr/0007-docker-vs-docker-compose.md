@@ -22,7 +22,7 @@ Real projects also have various volumes that need to be mounted for them to func
 
 Use a single docker image to ship dummy projects.
 
-Use one or more `docker-compose.yml` files to.
+Use one or more `docker-compose.yml` files to build and deploy real projects.
 
 ## Consequences
 
