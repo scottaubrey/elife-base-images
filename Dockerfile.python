@@ -1,0 +1,21 @@
+FROM python:3.5.5-jessie
+
+ENV LANG=en_US.UTF-8
+# TODO: extract users setup
+RUN useradd -ms /bin/bash -G www-data elife && \
+    chown elife:elife /srv && \
+    mkdir /srv/bin && \
+    chown elife:elife /srv/bin && \
+    mkdir -p /var/www && \
+    chown www-data:www-data /var/www
+ENV PATH=/srv/bin:${PATH}
+
+RUN pip install -U \
+    setuptools \
+    uwsgi-tools \
+    virtualenv
+RUN apt-get update && apt-get install netcat-openbsd
+
+COPY --chown=elife:elife utils/ /srv/bin/
+
+USER www-data
