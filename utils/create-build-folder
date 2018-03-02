@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+mkdir build/
+# writable from tests and other tools
+chown www-data:www-data build/
