@@ -1,8 +1,5 @@
 FROM php:7.0-cli-jessie
 
-# TODO: try apt-get clean
-RUN apt-get update && apt-get install -y git-core zip
-
 COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh
 ENV PATH=/srv/bin:${PATH}
@@ -10,6 +7,5 @@ ENV PATH=/srv/bin:${PATH}
 COPY scripts/ /root/scripts
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
-RUN /root/scripts/install-composer.sh
 
 USER www-data
