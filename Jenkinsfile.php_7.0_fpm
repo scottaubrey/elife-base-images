@@ -14,7 +14,7 @@ elifePipeline {
             }
 
             stage 'Sanity tests', {
-                sh "docker run elifesciences/php_7.0_fpm:${tag} /usr/bin/env php -r 'echo 42, PHP_EOL;'"
+                sh "docker run -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' elifesciences/php_7.0_fpm:${tag} assert_fpm '/' 'pong'"
             }
 
             elifeMainlineOnly {
