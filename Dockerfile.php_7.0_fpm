@@ -1,7 +1,12 @@
 FROM php:7.0-fpm-jessie
 
 # TODO: try apt-get clean
-RUN apt-get update && apt-get install -y libfcgi0ldbl
+RUN apt-get update && apt-get install -y \
+        libfcgi0ldbl \
+    && docker-php-ext-install \
+        opcache \
+    && docker-php-ext-enable \
+        opcache
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh
@@ -10,5 +15,7 @@ ENV PATH=/srv/bin:${PATH}
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 COPY --chown=elife:elife ping.php /var/www/html/
+
+COPY config/usr-local-etc-php-conf.d-elife.ini /usr/local/etc/php/conf.d/elife.ini
 
 USER www-data

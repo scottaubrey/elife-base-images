@@ -8,4 +8,6 @@ COPY scripts/ /root/scripts
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 
+COPY config/usr-local-etc-php-conf.d-elife.ini /usr/local/etc/php/conf.d/elife.ini
+
 USER www-data
