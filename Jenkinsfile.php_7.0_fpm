@@ -14,7 +14,9 @@ elifePipeline {
             }
 
             stage 'Sanity tests', {
-                sh "docker run -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' elifesciences/php_7.0_fpm:${tag} assert_fpm '/' 'pong'"
+                def container = sh(script: "docker run -d elifesciences/php_7.0_fpm:${tag}", returnStdout: true).trim()
+                sh "docker exec -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' ${container} assert_fpm '/' 'pong'"
+                sh "docker stop ${container}"
             }
 
             elifeMainlineOnly {
