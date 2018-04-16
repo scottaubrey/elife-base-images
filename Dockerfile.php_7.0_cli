@@ -1,9 +1,7 @@
 FROM php:7.0.29-cli-jessie
 
 RUN docker-php-ext-install \
-        opcache \
-    && docker-php-ext-enable \
-        opcache
+    opcache
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh
@@ -13,6 +11,6 @@ COPY scripts/ /root/scripts
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 
-COPY config/usr-local-etc-php-conf.d-elife.ini /usr/local/etc/php/conf.d/elife.ini
+COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
 
 USER www-data
