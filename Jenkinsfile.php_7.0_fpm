@@ -19,6 +19,7 @@ elifePipeline {
                     sh "docker exec -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' ${container} assert_fpm '/' 'pong'"
                 } finally {
                     sh "docker stop ${container}"
+                    sh "docker rm ${container}"
                 }
             }
 
