@@ -16,4 +16,4 @@ sed -i \
  -e "s/;\?newrelic.enabled =.*/newrelic.enabled = \${NEW_RELIC_ENABLED}/" \
  -e "s/newrelic.license =.*/newrelic.license = \${NEW_RELIC_LICENSE_KEY}/" \
  -e "s/newrelic.appname =.*/newrelic.appname = \${NEW_RELIC_APP_NAME}/" \
- /usr/local/etc/php/conf.d/newrelic.ini
+${PHP_INI_DIR}/conf.d/newrelic.ini
