@@ -7,7 +7,6 @@ COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh
 ENV PATH=/srv/bin:${PATH}
 
-COPY scripts/ /root/scripts
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 
