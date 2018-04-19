@@ -14,6 +14,7 @@ newrelic-install install
 # adapted from https://discuss.newrelic.com/t/php-agent-configuration-in-docker-containers/41499/3
 sed -i \
  -e "s/;\?newrelic.enabled =.*/newrelic.enabled = \${NEW_RELIC_ENABLED}/" \
- -e "s/newrelic.license =.*/newrelic.license = \${NEW_RELIC_LICENSE_KEY}/" \
- -e "s/newrelic.appname =.*/newrelic.appname = \${NEW_RELIC_APP_NAME}/" \
+ -e "s/;\?newrelic.license =.*/newrelic.license = \${NEW_RELIC_LICENSE_KEY}/" \
+ -e "s/;\?newrelic.appname =.*/newrelic.appname = \${NEW_RELIC_APP_NAME}/" \
+ -e "s/;\?newrelic.labels =.*/newrelic.labels = \"project:\${NEW_RELIC_APP_NAME};env:\${ENVIRONMENT_NAME}\"/" \
  /usr/local/etc/php/conf.d/newrelic.ini
