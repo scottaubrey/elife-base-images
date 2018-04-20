@@ -17,4 +17,6 @@ sed -i \
  -e "s/;\?newrelic.license =.*/newrelic.license = \${NEW_RELIC_LICENSE_KEY}/" \
  -e "s/;\?newrelic.appname =.*/newrelic.appname = \${NEW_RELIC_APP_NAME}/" \
  -e "s/;\?newrelic.labels =.*/newrelic.labels = \"project:\${NEW_RELIC_APP_NAME};env:\${ENVIRONMENT_NAME}\"/" \
- /usr/local/etc/php/conf.d/newrelic.ini
+${PHP_INI_DIR}/conf.d/newrelic.ini
+
+rm -rf /var/lib/apt/lists/*

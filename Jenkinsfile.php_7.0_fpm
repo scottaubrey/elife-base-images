@@ -1,0 +1,35 @@
+elifePipeline {
+    elifeOnNode(
+        {
+            def commit
+            def tag
+            stage 'Checkout', {
+                checkout scm
+                commit = elifeGitRevision()
+                tag = commit
+            }
+
+            stage 'Build image', {
+                sh "docker build -f Dockerfile.php_7.0_fpm -t elifesciences/php_7.0_fpm:${tag} ."
+            }
+
+            stage 'Sanity tests', {
+                def container = sh(script: "docker run -d elifesciences/php_7.0_fpm:${tag}", returnStdout: true).trim()
+                try {
+                    sh "docker exec -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' ${container} assert_fpm '/' 'pong'"
+                } finally {
+                    sh "docker stop ${container}"
+                    sh "docker rm ${container}"
+                }
+            }
+
+            elifeMainlineOnly {
+                stage 'Push image', {
+                    sh "docker push elifesciences/php_7.0_fpm:${tag}"
+                    sh "docker tag elifesciences/php_7.0_fpm:${tag} elifesciences/php_7.0_fpm:latest && docker push elifesciences/php_7.0_fpm:latest"
+                }
+            }
+        },
+        'elife-libraries--ci'
+    )
+}

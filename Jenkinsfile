@@ -10,7 +10,7 @@ elifePipeline {
 
             stage 'Build images', {
                 def actions = [:]
-                def images = ['php_cli', 'php_fpm', 'python']
+                def images = ['php_7.0_cli', 'php_7.0_fpm', 'python']
                 for (int i= 0; i < images.size(); i++) {
                     def image = images.get(i);
                     actions[image] = {

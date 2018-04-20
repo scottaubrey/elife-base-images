@@ -1,10 +1,10 @@
-FROM php:7.0-fpm-jessie
+FROM php:7.0.29-fpm-jessie
 
-# TODO: try apt-get clean
 RUN apt-get update && apt-get install -y \
-    git-core \
     libfcgi0ldbl \
-    zip
+    && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install \
+    opcache
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh
@@ -12,7 +12,8 @@ ENV PATH=/srv/bin:${PATH}
 
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
-RUN /root/scripts/install-composer.sh
 COPY --chown=elife:elife ping.php /var/www/html/
+
+COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
 
 USER www-data
