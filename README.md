@@ -2,8 +2,14 @@
 
 ## Available images
 
-- `php_7.0_cli`
-- `php_7.0_fpm`
+- [`php_7.0_cli`](https://hub.docker.com/r/elifesciences/php_7.0_cli/)
+- [`php_7.0_fpm`](https://hub.docker.com/r/elifesciences/php_7.0_fpm/)
+- [`python`](https://hub.docker.com/r/elifesciences/python/)
+
+## Deprecated images
+
+- [`php_cli`](https://hub.docker.com/r/elifesciences/php_cli/)
+- [`php_fpm`](https://hub.docker.com/r/elifesciences/php_fpm/)
 
 ## Basic infrastructure
 
