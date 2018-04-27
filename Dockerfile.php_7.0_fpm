@@ -15,5 +15,6 @@ RUN /root/scripts/install-newrelic-php.sh
 COPY --chown=elife:elife ping.php /var/www/html/
 
 COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.0-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
 
 USER www-data
