@@ -11,5 +11,6 @@ COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 
 COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.0-elife-cli.ini ${PHP_INI_DIR}/conf.d/elife-cli.ini
 
 USER www-data
