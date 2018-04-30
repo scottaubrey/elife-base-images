@@ -1,6 +1,9 @@
-FROM python:3.6.4-jessie
+FROM python:3.6.4-slim-jessie
+
+RUN rm -rf /usr/local/lib/python3.6/site-packages
 
 RUN apt-get update && apt-get install -y \
+    libxml2 \
     netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 

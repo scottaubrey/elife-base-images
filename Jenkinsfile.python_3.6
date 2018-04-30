@@ -15,7 +15,6 @@ elifePipeline {
 
             stage 'Sanity tests', {
                 sh "docker run elifesciences/python_3.6:${tag} python --version"
-                sh "docker run elifesciences/python_3.6:${tag} pip -V"
             }
 
             elifeMainlineOnly {
