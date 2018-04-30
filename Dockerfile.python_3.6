@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
-COPY scripts/ /root/scripts
+COPY scripts/setup-users-paths.sh /root/scripts/
 RUN /root/scripts/setup-users-paths.sh
 ENV PATH=/srv/bin:${PATH}
 
