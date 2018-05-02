@@ -1,0 +1,14 @@
+FROM python:3.6.4-slim-jessie
+
+RUN apt-get update && apt-get install -y \
+    libxml2 \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY scripts/setup-users-paths.sh /root/scripts/
+RUN /root/scripts/setup-users-paths.sh
+ENV PATH=/srv/bin:${PATH}
+
+COPY --chown=elife:elife utils/ /srv/bin/
+
+USER www-data

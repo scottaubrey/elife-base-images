@@ -1,0 +1,29 @@
+elifePipeline {
+    elifeOnNode(
+        {
+            def commit
+            def tag
+            stage 'Checkout', {
+                checkout scm
+                commit = elifeGitRevision()
+                tag = commit
+            }
+
+            stage 'Build image', {
+                sh "docker build -f Dockerfile.python_3.6 -t elifesciences/python_3.6:${tag} ."
+            }
+
+            stage 'Sanity tests', {
+                sh "docker run elifesciences/python_3.6:${tag} python --version"
+            }
+
+            elifeMainlineOnly {
+                stage 'Push image', {
+                    sh "docker push elifesciences/python_3.6:${tag}"
+                    sh "docker tag elifesciences/python_3.6:${tag} elifesciences/python_3.6:latest && docker push elifesciences/python_3.6:latest"
+                }
+            }
+        },
+        'elife-libraries--ci'
+    )
+}
