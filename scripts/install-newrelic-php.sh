@@ -20,3 +20,4 @@ sed -i \
 ${PHP_INI_DIR}/conf.d/newrelic.ini
 
 rm -rf /var/lib/apt/lists/*
+rm /tmp/nrinstall-*
