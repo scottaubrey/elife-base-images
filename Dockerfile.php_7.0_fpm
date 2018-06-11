@@ -1,9 +1,9 @@
 FROM php:7.0.29-fpm-jessie
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
     libfcgi0ldbl \
-    && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install \
+    && rm -rf /var/lib/apt/lists/* && \
+    docker-php-ext-install \
     opcache
 
 COPY scripts/ /root/scripts
