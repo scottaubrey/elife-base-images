@@ -6,7 +6,7 @@ curl https://download.newrelic.com/548C16BF.gpg | apt-key add -
 
 # the package contains both PHP 5 and PHP 7 support
 # https://discuss.newrelic.com/t/php-agent-and-php-7-0/27687/85
-apt-get update && apt-get install -y newrelic-php5
+apt-get update && apt-get install --no-install-recommends -y newrelic-php5
 
 NR_INSTALL_SILENT="set-any-value-to-enable" \
 newrelic-install install

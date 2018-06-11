@@ -1,6 +1,6 @@
 FROM python:3.6.4-slim-jessie
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
     libxml2 \
     netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
