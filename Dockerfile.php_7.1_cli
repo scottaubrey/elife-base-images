@@ -14,3 +14,6 @@ COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
 COPY config/php-7.1-elife-cli.ini ${PHP_INI_DIR}/conf.d/elife-cli.ini
 
 USER www-data
+
+ARG image_tag=latest
+LABEL org.label-schema.vcs-ref=${image_tag}

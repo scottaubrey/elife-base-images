@@ -10,7 +10,7 @@ elifePipeline {
             }
 
             stage 'Build image', {
-                sh "docker build -f Dockerfile.php_7.1_cli -t elifesciences/php_7.1_cli:${tag} ."
+                sh "docker build -f Dockerfile.php_7.1_cli -t elifesciences/php_7.1_cli:${tag} --build-arg image_tag=${commit} ."
             }
 
             stage 'Sanity tests', {

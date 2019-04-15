@@ -10,7 +10,7 @@ elifePipeline {
             }
 
             stage 'Build image', {
-                sh "docker build -f Dockerfile.python_3.6 -t elifesciences/python_3.6:${tag} ."
+                sh "docker build -f Dockerfile.python_3.6 -t elifesciences/python_3.6:${tag} --build-arg image_tag=${commit} ."
             }
 
             stage 'Sanity tests', {

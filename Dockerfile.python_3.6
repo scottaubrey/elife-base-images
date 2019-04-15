@@ -12,3 +12,6 @@ ENV PATH=/srv/bin:${PATH}
 COPY --chown=elife:elife utils/ /srv/bin/
 
 USER www-data
+
+ARG image_tag=latest
+LABEL org.label-schema.vcs-ref=${image_tag}
