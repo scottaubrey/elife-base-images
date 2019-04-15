@@ -1,6 +1,5 @@
 elifePipeline {
-    elifeOnNode(
-        {
+    node('containers-jenkins-plugin') {
             def commit
             def tag
             stage 'Checkout', {
@@ -23,7 +22,5 @@ elifePipeline {
                     sh "docker tag elifesciences/python_3.6:${tag} elifesciences/python_3.6:latest && docker push elifesciences/python_3.6:latest"
                 }
             }
-        },
-        'elife-libraries--ci'
-    )
+    }
 }

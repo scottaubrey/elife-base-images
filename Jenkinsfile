@@ -1,7 +1,6 @@
 // see Jenkinsfile.* for the various mainline versions including pushes
 elifePipeline {
-    elifeOnNode(
-        {
+    node('containers-jenkins-plugin') {
             def commit
             stage 'Checkout', {
                 checkout scm
@@ -19,7 +18,5 @@ elifePipeline {
                 }
                 parallel actions
             }
-        },
-        'elife-libraries--ci'
-    )
+    }
 }
