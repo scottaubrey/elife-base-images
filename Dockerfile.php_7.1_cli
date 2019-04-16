@@ -1,4 +1,4 @@
-FROM php:7.0.29-cli-jessie
+FROM php:7.1.28-cli-jessie
 
 RUN docker-php-ext-install \
     opcache
@@ -10,7 +10,10 @@ ENV PATH=/srv/bin:${PATH}
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 
-COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
-COPY config/php-7.0-elife-cli.ini ${PHP_INI_DIR}/conf.d/elife-cli.ini
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-cli.ini ${PHP_INI_DIR}/conf.d/elife-cli.ini
 
 USER www-data
+
+ARG image_tag=latest
+LABEL org.label-schema.vcs-ref=${image_tag}

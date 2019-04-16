@@ -1,4 +1,4 @@
-FROM php:7.0.29-fpm-jessie
+FROM php:7.1.28-fpm-jessie
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libfcgi0ldbl \
@@ -14,7 +14,10 @@ COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 COPY --chown=elife:elife ping.php /var/www/html/
 
-COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
-COPY config/php-7.0-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
 
 USER www-data
+
+ARG image_tag=latest
+LABEL org.label-schema.vcs-ref=${image_tag}

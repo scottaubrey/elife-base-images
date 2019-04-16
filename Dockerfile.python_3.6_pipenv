@@ -1,3 +1,6 @@
-FROM python:3.6.4-jessie
+FROM python:3.6.8-stretch
 
 RUN pip install --no-cache-dir --only-binary --upgrade pipenv
+
+ARG image_tag=latest
+LABEL org.label-schema.vcs-ref=${image_tag}
