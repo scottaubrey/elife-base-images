@@ -1,11 +1,12 @@
 FROM php:7.3.4-fpm-stretch
 
-RUN set -e \
-    apt-get update \
-    apt-get install --no-install-recommends -y \
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
     libfcgi0ldbl \
-    rm -rf /var/lib/apt/lists/* \
-    docker-php-ext-install \
+    libfcgi-bin \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install \
     opcache
 
 COPY scripts/ /root/scripts
@@ -16,7 +17,7 @@ COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
 COPY --chown=elife:elife ping.php /var/www/html/
 
-COPY config/php-7.0-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
-COPY config/php-7.0-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
 
 USER www-data
