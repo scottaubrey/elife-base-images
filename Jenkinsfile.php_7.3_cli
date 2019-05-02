@@ -1,0 +1,26 @@
+elifePipeline {
+    node('containers-jenkins-plugin') {
+        def commit
+        def tag
+        stage 'Checkout', {
+            checkout scm
+            commit = elifeGitRevision()
+            tag = commit
+        }
+
+        stage 'Build image', {
+            sh "docker build -f Dockerfile.php_7.3_cli -t elifesciences/php_7.3_cli:${tag} --build-arg image_tag=${commit} ."
+        }
+
+        stage 'Sanity tests', {
+            sh "docker run elifesciences/php_7.3_cli:${tag} -r 'echo 42, PHP_EOL;'"
+        }
+
+        elifeMainlineOnly {
+            stage 'Push image', {
+                sh "docker push elifesciences/php_7.3_cli:${tag}"
+                sh "docker tag elifesciences/php_7.3_cli:${tag} elifesciences/php_7.3_cli:latest && docker push elifesciences/php_7.3_cli:latest"
+            }
+        }
+    }
+}

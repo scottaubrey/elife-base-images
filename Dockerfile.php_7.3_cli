@@ -1,0 +1,20 @@
+FROM php:7.3.4-cli-stretch
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install \
+    opcache
+
+COPY scripts/ /root/scripts
+RUN /root/scripts/setup-users-paths.sh
+ENV PATH=/srv/bin:${PATH}
+
+COPY --chown=elife:elife utils/ /srv/bin/
+RUN /root/scripts/install-newrelic-php.sh
+
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+
+USER www-data
