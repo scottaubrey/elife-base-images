@@ -2,7 +2,6 @@ FROM php:7.3.4-fpm-stretch
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-    libfcgi0ldbl \
     libfcgi-bin \
     gnupg \
     && rm -rf /var/lib/apt/lists/* \
