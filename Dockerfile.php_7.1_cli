@@ -1,4 +1,4 @@
-FROM php:7.1.28-cli-jessie
+FROM php:7.1.33-cli-stretch
 
 RUN docker-php-ext-install \
     opcache
