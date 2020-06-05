@@ -1,4 +1,4 @@
-FROM php:7.1.33-fpm-stretch
+FROM php:7.1.33-fpm-buster
 
 RUN apt-get update && apt-get install --no-install-recommends -y libfcgi0ldbl gnupg2
 RUN rm -rf /var/lib/apt/lists/*
