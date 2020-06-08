@@ -1,10 +1,8 @@
-FROM php:7.1.28-fpm-jessie
+FROM php:7.1.33-fpm-buster
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
-    libfcgi0ldbl \
-    && rm -rf /var/lib/apt/lists/* && \
-    docker-php-ext-install \
-    opcache
+RUN apt-get update && apt-get install --no-install-recommends -y libfcgi0ldbl gnupg2
+RUN rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install opcache
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh

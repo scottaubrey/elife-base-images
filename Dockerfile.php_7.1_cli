@@ -1,7 +1,7 @@
-FROM php:7.1.28-cli-jessie
+FROM php:7.1.33-cli-buster
 
-RUN docker-php-ext-install \
-    opcache
+RUN apt-get update && apt-get install gnupg2 -y --no-install-recommends
+RUN docker-php-ext-install opcache
 
 COPY scripts/ /root/scripts
 RUN /root/scripts/setup-users-paths.sh
