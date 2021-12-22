@@ -1,0 +1,22 @@
+FROM php:8.0-fpm-bullseye@sha256:a0a0df5711e1caef1120ed9206fce24d3ea8549fc6e066104a1bc0175226e2f0
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    libfcgi-bin \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install \
+    opcache
+
+COPY scripts/ /root/scripts
+RUN /root/scripts/setup-users-paths.sh
+ENV PATH=/srv/bin:${PATH}
+
+COPY --chown=elife:elife utils/ /srv/bin/
+RUN /root/scripts/install-newrelic-php.sh
+COPY --chown=elife:elife ping.php /var/www/html/
+
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+
+USER www-data
