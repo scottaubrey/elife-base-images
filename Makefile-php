@@ -1,0 +1,54 @@
+#!/usr/bin/env make
+VERSION=7.4
+REPO_PREFIX=elifesciences/
+
+REPO_SUFFIX=php
+REPO=$(REPO_PREFIX)$(REPO_SUFFIX)
+DOCKERFILE_SUFFIX=php-$(VERSION)-$1
+VERSION_TAG=$(REPO_PREFIX)$(REPO_SUFFIX):$(VERSION)-$1
+VERSION_TAG_CLI=$(REPO_PREFIX)$(REPO_SUFFIX):$(VERSION)-cli
+VERSION_TAG_FPM=$(REPO_PREFIX)$(REPO_SUFFIX):$(VERSION)-fpm
+
+build_image = (docker build -f Dockerfile.$(DOCKERFILE_SUFFIX) -t $(VERSION_TAG) .)
+push_image = (docker push -t $(VERSION_TAG))
+buildx_image = (docker buildx build --push \
+				--platform linux/amd64,linux/arm64 \
+				-f Dockerfile.$(DOCKERFILE_SUFFIX) \
+				-t $(VERSION_TAG) \
+				.)
+
+test_docker_container_name="test_php_fpm"
+
+# build for current platform only.
+build: build-cli build-fpm
+build-cli:
+	$(call build_image,cli)
+
+build-fpm:
+	$(call build_image,fpm)
+
+# tests for locally stored images built
+test: test-cli test-fpm
+test-cli:
+	@[ "$$(docker run --rm $(VERSION_TAG_CLI) -r 'echo 42;')" == "42" ] || (echo "TEST $(VERSION_TAG_CLI) FAILED"; exit 1)
+	@echo "TEST $(VERSION_TAG_CLI) OK"
+test-fpm:
+	@docker stop $(test_docker_container_name) > /dev/null|| true
+	@docker rm $(test_docker_container_name) > /dev/null || true
+	@docker run --name $(test_docker_container_name) -d $(VERSION_TAG_FPM)  > /dev/null
+
+	@docker exec -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' $(test_docker_container_name) assert_fpm '/' 'pong' | sed  's/^/     /'; \
+		docker_exit_code=$$?; \
+		docker stop $(test_docker_container_name) > /dev/null; \
+		[ $$docker_exit_code = 0 ] || (echo "TEST $(VERSION_TAG_FPM) FAILED"; exit $$docker_exit_code)
+	@echo "TEST $(VERSION_TAG_FPM) OK"
+
+
+
+# use buildx for multiplatform
+buildx: buildx-cli buildx-fpm
+buildx-cli:
+	$(call buildx_image,cli)
+
+buildx-fpm:
+	$(call buildx_image,fpm)
