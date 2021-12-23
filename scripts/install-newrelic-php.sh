@@ -13,10 +13,13 @@ make all
 sudo make agent-install
 cp agent/scripts/newrelic.ini.template ${PHP_INI_DIR}/conf.d/newrelic.ini
 make daemon
-cp bin/daemon /usr/local/bin/newrelic-daemon
-cp bin/client /usr/local/bin/newrelic-client
-cp bin/stressor /usr/local/bin/newrelic-stressor
-cp bin/integration_runner /usr/local/bin/newrelic-integration_runner
+cp bin/daemon /usr/bin/newrelic-daemon
+cp bin/client /usr/bin/newrelic-client
+cp bin/stressor /usr/bin/newrelic-stressor
+cp bin/integration_runner /usr/bin/newrelic-integration_runner
+
+mkdir /var/log/newrelic
+chown www-data:www-data /var/log/newrelic
 
 rm -Rf /tmp/nrsrc
 SUDO_FORCE_REMOVE=yes apt-get -y autoremove golang-go sudo automake libtool-bin autotools-dev git build-essential
