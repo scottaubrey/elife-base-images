@@ -26,6 +26,8 @@ build_image = (docker build $(docker_build_options))
 buildx_image = (docker buildx build --push --platform linux/amd64,linux/arm64 $(docker_build_options))
 
 test_docker_container_name="test_php_fpm"
+test_cli_runs = @[ "$$(docker run --rm $(PHP_VERSION_TAG) php -r 'echo 42;')" == "42" ] || (echo "TEST $(PHP_VERSION_TAG) FAILED - cli did not run"; exit 1)
+test_opcache_enabled = @(docker run --rm $(PHP_VERSION_TAG) php -m | grep 'Zend OPcache') > /dev/null || (echo "TEST $(PHP_VERSION_TAG) FAILED - opcache is not enabled"; exit 1)
 
 # build for current platform only.
 build: build-cli build-fpm
@@ -38,10 +40,12 @@ build-fpm:
 # tests for locally stored images built
 test: test-cli test-fpm
 test-cli:
-	@[ "$$(docker run --rm $(PHP_VERSION_TAG_CLI) -r 'echo 42;')" == "42" ] || (echo "TEST $(PHP_VERSION_TAG_CLI) FAILED - cli did not run"; exit 1)
-	@(docker run --rm $(PHP_VERSION_TAG_CLI) -m | grep 'Zend OPcache') > /dev/null || (echo "TEST $(PHP_VERSION_TAG_CLI) FAILED - opcache is not enabled"; exit 1)
+	$(call test_cli_runs,cli)
+	$(call test_opcache_enabled,cli)
 	@echo "TEST $(PHP_VERSION_TAG_CLI) OK"
 test-fpm:
+	$(call test_cli_runs,fpm)
+	$(call test_opcache_enabled,fpm)
 	@docker stop $(test_docker_container_name) > /dev/null|| true
 	@docker rm $(test_docker_container_name) > /dev/null || true
 	@docker run --name $(test_docker_container_name) -d $(PHP_VERSION_TAG_FPM)  > /dev/null
