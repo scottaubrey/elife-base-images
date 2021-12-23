@@ -38,7 +38,8 @@ build-fpm:
 # tests for locally stored images built
 test: test-cli test-fpm
 test-cli:
-	@[ "$$(docker run --rm $(PHP_VERSION_TAG_CLI) -r 'echo 42;')" == "42" ] || (echo "TEST $(PHP_VERSION_TAG_CLI) FAILED"; exit 1)
+	@[ "$$(docker run --rm $(PHP_VERSION_TAG_CLI) -r 'echo 42;')" == "42" ] || (echo "TEST $(PHP_VERSION_TAG_CLI) FAILED - cli did not run"; exit 1)
+	@(docker run --rm $(PHP_VERSION_TAG_CLI) -m | grep 'Zend OPcache') > /dev/null || (echo "TEST $(PHP_VERSION_TAG_CLI) FAILED - opcache is not enabled"; exit 1)
 	@echo "TEST $(PHP_VERSION_TAG_CLI) OK"
 test-fpm:
 	@docker stop $(test_docker_container_name) > /dev/null|| true
