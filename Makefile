@@ -1,4 +1,5 @@
 PHP_MAKEFILE = Makefile-php
+COMMIT=develop
 
 # TODO: while this is in a fork - let use a different repo name
 REPO_PREFIX=scottaubrey/elifesciences-
@@ -28,6 +29,6 @@ build-and-test-php-8.0: build-php-8.0 test-php-8.0
 # and push to docker hub (as local docker can't store multi-arch image manifest)
 buildx-and-push-php: buildx-and-push-php-7.4 buildx-and-push-php-8.0
 buildx-and-push-php-7.4:
-	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) VERSION=7.4 buildx
+	@$(MAKE) -f $(PHP_MAKEFILE) COMMIT=$(COMMIT) REPO_PREFIX=$(REPO_PREFIX) VERSION=7.4 buildx
 buildx-and-push-php-8.0:
-	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) VERSION=8.0 buildx
+	@$(MAKE) -f $(PHP_MAKEFILE) COMMIT=$(COMMIT) REPO_PREFIX=$(REPO_PREFIX) VERSION=8.0 buildx

@@ -1,21 +1,29 @@
 #!/usr/bin/env make
-VERSION=7.4
+PHP_VERSION=7.4
 REPO_PREFIX=elifesciences/
+
+COMMIT=develop
+VENDOR=elifesciences
 
 REPO_SUFFIX=php
 REPO=$(REPO_PREFIX)$(REPO_SUFFIX)
-DOCKERFILE_SUFFIX=php-$(VERSION)-$1
-VERSION_TAG=$(REPO_PREFIX)$(REPO_SUFFIX):$(VERSION)-$1
-VERSION_TAG_CLI=$(REPO_PREFIX)$(REPO_SUFFIX):$(VERSION)-cli
-VERSION_TAG_FPM=$(REPO_PREFIX)$(REPO_SUFFIX):$(VERSION)-fpm
+DOCKERFILE_SUFFIX=php-$(PHP_VERSION)-$1
+PHP_VERSION_TAG=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-$1
+PHP_VERSION_TAG_CLI=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-cli
+PHP_VERSION_TAG_FPM=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-fpm
 
-build_image = (docker build -f Dockerfile.$(DOCKERFILE_SUFFIX) -t $(VERSION_TAG) .)
-push_image = (docker push -t $(VERSION_TAG))
-buildx_image = (docker buildx build --push \
-				--platform linux/amd64,linux/arm64 \
+docker_build_options=--label org.label-schema.schema-version=1.0 \
+				--label org.label-schema.vcs-ref=$(COMMIT) \
+				--label org.label-schema.build-date=$$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+				--label org.opencontainers.image.revision=$(COMMIT) \
+				--label org.opencontainers.image.vendor=$(VENDOR) \
 				-f Dockerfile.$(DOCKERFILE_SUFFIX) \
-				-t $(VERSION_TAG) \
-				.)
+				-t $(PHP_VERSION_TAG) \
+				.
+
+build_image = (docker build $(docker_build_options))
+
+buildx_image = (docker buildx build --push --platform linux/amd64,linux/arm64 $(docker_build_options))
 
 test_docker_container_name="test_php_fpm"
 
@@ -30,18 +38,18 @@ build-fpm:
 # tests for locally stored images built
 test: test-cli test-fpm
 test-cli:
-	@[ "$$(docker run --rm $(VERSION_TAG_CLI) -r 'echo 42;')" == "42" ] || (echo "TEST $(VERSION_TAG_CLI) FAILED"; exit 1)
-	@echo "TEST $(VERSION_TAG_CLI) OK"
+	@[ "$$(docker run --rm $(PHP_VERSION_TAG_CLI) -r 'echo 42;')" == "42" ] || (echo "TEST $(PHP_VERSION_TAG_CLI) FAILED"; exit 1)
+	@echo "TEST $(PHP_VERSION_TAG_CLI) OK"
 test-fpm:
 	@docker stop $(test_docker_container_name) > /dev/null|| true
 	@docker rm $(test_docker_container_name) > /dev/null || true
-	@docker run --name $(test_docker_container_name) -d $(VERSION_TAG_FPM)  > /dev/null
+	@docker run --name $(test_docker_container_name) -d $(PHP_VERSION_TAG_FPM)  > /dev/null
 
 	@docker exec -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' $(test_docker_container_name) assert_fpm '/' 'pong' | sed  's/^/     /'; \
 		docker_exit_code=$$?; \
 		docker stop $(test_docker_container_name) > /dev/null; \
-		[ $$docker_exit_code = 0 ] || (echo "TEST $(VERSION_TAG_FPM) FAILED"; exit $$docker_exit_code)
-	@echo "TEST $(VERSION_TAG_FPM) OK"
+		[ $$docker_exit_code = 0 ] || (echo "TEST $(PHP_VERSION_TAG_FPM) FAILED"; exit $$docker_exit_code)
+	@echo "TEST $(PHP_VERSION_TAG_FPM) OK"
 
 
 
