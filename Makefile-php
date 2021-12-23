@@ -1,4 +1,4 @@
-#!/usr/bin/env make
+SHELL := /bin/bash
 PHP_VERSION=7.4
 REPO_PREFIX=elifesciences/
 
