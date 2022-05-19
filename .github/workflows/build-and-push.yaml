@@ -20,4 +20,4 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: run docker buildx and push images
-        run: make COMMIT=${GITHUB_SHA} buildx-and-push
+        run: make COMMIT=${GITHUB_SHA} buildx-and-push-php
