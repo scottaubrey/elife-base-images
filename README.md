@@ -12,7 +12,7 @@
 
 ## Unified PHP image
 
-- [unified docker PHP image repository (with tags for `7.4-cli`, `7.4-fpm`, `8.0-cli` and `8.0-fpm)`](https://hub.docker.com/r/scottaubrey/elifesciences-php/tags)
+- [unified docker PHP image repository (with tags for `7.1-cli`, `7.1-fpm`, `7.3-cli`, `7.3-fpm`, `7.4-cli`, `7.4-fpm`, `8.0-cli`, `8.0-fpm`, `8.1-cli` and `8.1-fpm)`](https://hub.docker.com/r/scottaubrey/elifesciences-php/tags)
 
 NOTE: there is no `latest` tag - instead, specify the tag you desire, e.g. `docker pull scottaubrey/elifesciences-php:7.4-cli`
 
