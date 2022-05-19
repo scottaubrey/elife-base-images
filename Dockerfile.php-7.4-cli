@@ -1,0 +1,19 @@
+FROM php:7.4-cli-bullseye@sha256:136a3482b37c29a48b605a59ea132d4b3f3a46e0250a08e74814591c170d898c
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY scripts/ /root/scripts
+RUN /root/scripts/setup-users-paths.sh
+ENV PATH=/srv/bin:${PATH}
+
+COPY --chown=elife:elife utils/ /srv/bin/
+RUN /root/scripts/install-newrelic-php.sh
+
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+COPY config/php-ext-opcache.ini ${PHP_INI_DIR}/conf.d/ext-opcache.ini
+
+USER www-data

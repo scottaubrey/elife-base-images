@@ -1,0 +1,67 @@
+SHELL := /bin/bash
+PHP_VERSION=7.4
+REPO_PREFIX=elifesciences/
+
+COMMIT=develop
+VENDOR=elifesciences
+
+REPO_SUFFIX=php
+REPO=$(REPO_PREFIX)$(REPO_SUFFIX)
+DOCKERFILE_SUFFIX=php-$(PHP_VERSION)-$1
+PHP_VERSION_TAG=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-$1
+PHP_VERSION_TAG_CLI=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-cli
+PHP_VERSION_TAG_FPM=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-fpm
+
+docker_build_options=--label org.label-schema.schema-version=1.0 \
+				--label org.label-schema.vcs-ref=$(COMMIT) \
+				--label org.label-schema.build-date=$$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+				--label org.opencontainers.image.revision=$(COMMIT) \
+				--label org.opencontainers.image.vendor=$(VENDOR) \
+				-f Dockerfile.$(DOCKERFILE_SUFFIX) \
+				-t $(PHP_VERSION_TAG) \
+				.
+
+build_image = (docker build $(docker_build_options))
+
+buildx_image = (docker buildx build --push --platform linux/amd64,linux/arm64 $(docker_build_options))
+
+test_docker_container_name="test_php_fpm"
+test_cli_runs = @[ "$$(docker run --rm $(PHP_VERSION_TAG) php -r 'echo 42;')" == "42" ] || (echo "TEST $(PHP_VERSION_TAG) FAILED - cli did not run"; exit 1)
+test_opcache_enabled = @(docker run --rm $(PHP_VERSION_TAG) php -m | grep 'Zend OPcache') > /dev/null || (echo "TEST $(PHP_VERSION_TAG) FAILED - opcache is not enabled"; exit 1)
+
+# build for current platform only.
+build: build-cli build-fpm
+build-cli:
+	$(call build_image,cli)
+
+build-fpm:
+	$(call build_image,fpm)
+
+# tests for locally stored images built
+test: test-cli test-fpm
+test-cli:
+	$(call test_cli_runs,cli)
+	$(call test_opcache_enabled,cli)
+	@echo "TEST $(PHP_VERSION_TAG_CLI) OK"
+test-fpm:
+	$(call test_cli_runs,fpm)
+	$(call test_opcache_enabled,fpm)
+	@docker stop $(test_docker_container_name) > /dev/null|| true
+	@docker rm $(test_docker_container_name) > /dev/null || true
+	@docker run --name $(test_docker_container_name) -d $(PHP_VERSION_TAG_FPM)  > /dev/null
+
+	@docker exec -e 'PROJECT_FOLDER=/var/www/html' -e 'PHP_ENTRYPOINT=ping.php' $(test_docker_container_name) assert_fpm '/' 'pong' | sed  's/^/     /'; \
+		docker_exit_code=$$?; \
+		docker stop $(test_docker_container_name) > /dev/null; \
+		[ $$docker_exit_code = 0 ] || (echo "TEST $(PHP_VERSION_TAG_FPM) FAILED"; exit $$docker_exit_code)
+	@echo "TEST $(PHP_VERSION_TAG_FPM) OK"
+
+
+
+# use buildx for multiplatform
+buildx: buildx-cli buildx-fpm
+buildx-cli:
+	$(call buildx_image,cli)
+
+buildx-fpm:
+	$(call buildx_image,fpm)
