@@ -1,0 +1,21 @@
+FROM php:7.3-fpm-bullseye@sha256:2d68e401d2d3b9f8a6572791cd7a25062450c43ff52e58391146809741ad0885
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    libfcgi-bin \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY scripts/ /root/scripts
+RUN /root/scripts/setup-users-paths.sh
+ENV PATH=/srv/bin:${PATH}
+
+COPY --chown=elife:elife utils/ /srv/bin/
+RUN /root/scripts/install-newrelic-php.sh
+COPY --chown=elife:elife ping.php /var/www/html/
+
+COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+COPY config/php-ext-opcache.ini ${PHP_INI_DIR}/conf.d/ext-opcache.ini
+
+USER www-data
