@@ -21,9 +21,9 @@ build-php-8.1:
 # run the baseline tests that the images run
 test-php: test-php-7.1 test-php-7.3 test-php-7.4 test-php-8.0 test-php-8.1
 test-php-7.1:
-	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) PHP_VERSION=7.4 test
+	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) PHP_VERSION=7.1 test
 test-php-7.3:
-	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) PHP_VERSION=7.4 test
+	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) PHP_VERSION=7.3 test
 test-php-7.4:
 	@$(MAKE) -f $(PHP_MAKEFILE) REPO_PREFIX=$(REPO_PREFIX) PHP_VERSION=7.4 test
 test-php-8.0:
