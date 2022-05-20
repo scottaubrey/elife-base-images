@@ -1,4 +1,4 @@
-FROM php:7.1-fpm-buster@sha256:8c526fa0d10f4cdb1db1dd6dc6c277fae74719bc7ea73b536ea16c389e3fe436
+FROM php:8.1-fpm-buster@sha256:762d3d6d33e0f5e01e196a14d3d1ccb349cc54e6b99ac12e77591ecb87e1243e
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \

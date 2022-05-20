@@ -1,4 +1,4 @@
-FROM php:7.1-cli-buster@sha256:e0e6ced092bbf073e4f3e48545a8e1a2592217b3346ef0cb8b18ecacf8ae1522
+FROM php:8.1-cli-buster@sha256:bdae352094d31fa70b5ab73893138d006c0e22307e858e6f0c3632d0c7abe207
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
