@@ -1,4 +1,4 @@
-FROM php:7.4-cli-bullseye@sha256:1010154370d8c0c926c7d899f222ee9498cee01491b908f829a6ae2b86276f30
+FROM php:7.4-cli-bullseye@sha256:06c6f58ae43d78b86f57c629438d0fbe33af6c0865d1163e39c2387d929a9e41
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \

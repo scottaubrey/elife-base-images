@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-bullseye@sha256:a8ae8ecb5a92709a0965fac146524fd2b99d0d4187ca79046bdb3699f2cfbee0
+FROM php:8.0-fpm-bullseye@sha256:b471626af4099ab0a9f0303c70fa8ce3cf7590034c26bf2875cddcb0a6dd9ba9
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
