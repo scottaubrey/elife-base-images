@@ -11,12 +11,12 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    # concurrency:
-    #   group: ${{ github.ref }}-${{ matrix.php_version }}
-    #   cancel-in-progress: true
-    # strategy:
-    #   matrix:
-    #     php_version: ['7.1', '7.3', '7.4', '8.0', '8.1']
+    concurrency:
+      group: ${{ github.ref }}-${{ matrix.php_version }}
+      cancel-in-progress: true
+    strategy:
+      matrix:
+        php_version: ['7.1', '7.3', '7.4', '8.0', '8.1']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,5 +34,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: run docker buildx and push images
-        # run: make COMMIT=${GITHUB_SHA} REPO_PREFIX=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} buildx-and-push-php-${{ matrix.php_version }}
-        run: make COMMIT=${GITHUB_SHA} REPO_PREFIX=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} buildx-and-push-php
+        run: make COMMIT=${GITHUB_SHA} REPO_PREFIX=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} buildx-and-push-php-${{ matrix.php_version }}
