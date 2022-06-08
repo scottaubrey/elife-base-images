@@ -1,8 +1,7 @@
 PHP_MAKEFILE = Makefile-php
 COMMIT=develop
 
-# TODO: while this is in a fork - let use a different repo name
-REPO_PREFIX=scottaubrey/elifesciences-
+REPO_PREFIX=elifesciences/
 
 # these targets will build the php versions for your current platform and store them in the local docker
 # pushing isn't provided, as we want to push multi-arch manifests to the tags
