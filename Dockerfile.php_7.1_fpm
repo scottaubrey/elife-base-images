@@ -1,4 +1,4 @@
-FROM php:7.1.33-fpm-buster
+FROM php:7.4.30-fpm-buster
 
 # lsh@2020-06: libfcgi-bin is now a *recommended* dependency of libfcgi0ldbl and must be
 # explicitly installed if --no-install-recommends is enabled
