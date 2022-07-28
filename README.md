@@ -2,13 +2,9 @@
 
 ## Available images
 
-- ~[`php_7.0_cli`](https://hub.docker.com/r/elifesciences/php_7.0_cli/)~
-- ~[`php_7.0_fpm`](https://hub.docker.com/r/elifesciences/php_7.0_fpm/)~
-- [`php_7.1_cli`](https://hub.docker.com/r/elifesciences/php_7.1_cli/)
-- [`php_7.1_fpm`](https://hub.docker.com/r/elifesciences/php_7.1_fpm/)
-- [`php_7.3_cli`](https://hub.docker.com/r/elifesciences/php_7.3_cli/)
-- [`php_7.3_fpm`](https://hub.docker.com/r/elifesciences/php_7.3_fpm/)
-- [`python_3.6`](https://hub.docker.com/r/elifesciences/python_3.6/)
+- [`php_7.3_cli`](https://hub.docker.com/r/elifesciences/php_7.3_cli/tags)
+- [`php_7.3_fpm`](https://hub.docker.com/r/elifesciences/php_7.3_fpm/tags)
+- [`python_3.8`](https://hub.docker.com/r/elifesciences/python_3.8/tags)
 
 ## Unified PHP image
 
@@ -16,16 +12,24 @@
 
 NOTE: there is no `latest` tag - instead, specify the tag you desire, e.g. `docker pull scottaubrey/elifesciences-php:7.4-cli`
 
-
-## Available helper images
-
-- [`python_3.6_pipenv`](https://hub.docker.com/r/elifesciences/python_3.6_pipenv/)
-
 ## Deprecated images
 
-- [`php_cli`](https://hub.docker.com/r/elifesciences/php_cli/)
-- [`php_fpm`](https://hub.docker.com/r/elifesciences/php_fpm/)
-- [`python`](https://hub.docker.com/r/elifesciences/python/)
+Do not use, still maintained and built.
+
+- [`php_7.1_cli`](https://hub.docker.com/r/elifesciences/php_7.1_cli/tags)
+- [`php_7.1_fpm`](https://hub.docker.com/r/elifesciences/php_7.1_fpm/tags)
+
+## Obsolete images
+
+Do not use, no longer maintained or built.
+
+- [`php_cli`](https://hub.docker.com/r/elifesciences/php_cli/tags)
+- [`php_fpm`](https://hub.docker.com/r/elifesciences/php_fpm/tags)
+- [`php_7.0_cli`](https://hub.docker.com/r/elifesciences/php_7.0_cli/tags)
+- [`php_7.0_fpm`](https://hub.docker.com/r/elifesciences/php_7.0_fpm/tags)
+- [`python`](https://hub.docker.com/r/elifesciences/python/tags)
+- [`python_3.6`](https://hub.docker.com/r/elifesciences/python_3.6/tags)
+- [`python_3.6_pipenv`](https://hub.docker.com/r/elifesciences/python_3.6_pipenv/tags)
 
 ## Basic infrastructure
 
