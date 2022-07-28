@@ -12,7 +12,6 @@ elifePipeline {
                 def images = [
                     'php_7.1_cli', 'php_7.1_fpm',
                     'php_7.3_cli', 'php_7.3_fpm',
-                    'python_3.6', 'python_3.6_pipenv',
                     'python_3.8'
                 ]
                 for (int i= 0; i < images.size(); i++) {
