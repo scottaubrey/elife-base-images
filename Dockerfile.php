@@ -18,13 +18,12 @@ RUN /root/scripts/install-newrelic-php.sh
 COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
 COPY config/php-ext-opcache.ini ${PHP_INI_DIR}/conf.d/ext-opcache.ini
 
-USER www-data
-
 
 # CLI target
 FROM base as cli
 
 COPY config/php-7.1-elife-cli.ini ${PHP_INI_DIR}/conf.d/elife-cli.ini
+USER www-data
 
 
 # FPM target
@@ -36,5 +35,5 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --chown=elife:elife ping.php /var/www/html/
-
 COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
+USER www-data
