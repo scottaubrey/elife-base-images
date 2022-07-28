@@ -1,8 +1,10 @@
-FROM php:7.4-fpm-bullseye@sha256:d5c16ec704c806281ae041fec38a3886a005c886a1819775cbbf4d31c5042e7f
+ARG BASE_IMAGE
+
+# Shared layers
+FROM ${BASE_IMAGE} as base
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-    libfcgi-bin \
     gnupg \
     && rm -rf /var/lib/apt/lists/*
 
@@ -12,10 +14,27 @@ ENV PATH=/srv/bin:${PATH}
 
 COPY --chown=elife:elife utils/ /srv/bin/
 RUN /root/scripts/install-newrelic-php.sh
-COPY --chown=elife:elife ping.php /var/www/html/
 
 COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
-COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
 COPY config/php-ext-opcache.ini ${PHP_INI_DIR}/conf.d/ext-opcache.ini
 
 USER www-data
+
+
+# CLI target
+FROM base as cli
+
+COPY config/php-7.1-elife-cli.ini ${PHP_INI_DIR}/conf.d/elife-cli.ini
+
+
+# FPM target
+FROM base as fpm
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    libfcgi-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --chown=elife:elife ping.php /var/www/html/
+
+COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini

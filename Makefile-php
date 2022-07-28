@@ -5,9 +5,15 @@ REPO_PREFIX=elifesciences/
 COMMIT=develop
 VENDOR=elifesciences
 
+# this file contains all the digests for PHP images. This allows somewhat reporoducible images, as the base image remains
+# the same. However, we pull in the latest packages from debian repo, so there is and will be some variability depending
+# on when it is built
+include php_image_digests.txt
+# and this is then set to the correct version when invoked with $(call)
+BASE_IMAGE=$(PHP_IMAGE_$(PHP_VERSION)_$1)
+
 REPO_SUFFIX=php
 REPO=$(REPO_PREFIX)$(REPO_SUFFIX)
-DOCKERFILE_SUFFIX=php-$(PHP_VERSION)-$1
 PHP_VERSION_TAG=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-$1
 PHP_VERSION_TAG_CLI=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-cli
 PHP_VERSION_TAG_FPM=$(REPO_PREFIX)$(REPO_SUFFIX):$(PHP_VERSION)-fpm
@@ -17,7 +23,8 @@ docker_build_options=--label org.label-schema.schema-version=1.0 \
 				--label org.label-schema.build-date=$$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
 				--label org.opencontainers.image.revision=$(COMMIT) \
 				--label org.opencontainers.image.vendor=$(VENDOR) \
-				-f Dockerfile.$(DOCKERFILE_SUFFIX) \
+				-f Dockerfile.php \
+				--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 				-t $(PHP_VERSION_TAG) \
 				.
 
