@@ -1,9 +1,9 @@
 # THESE digests are read by Makefile-php to get a stable image
 
-PHP_IMAGE_7.1_cli=php:7.1-cli-buster@sha256:e0e6ced092bbf073e4f3e48545a8e1a2592217b3346ef0cb8b18ecacf8ae1522
-PHP_IMAGE_7.1_fpm=php:7.1-fpm-buster@sha256:8c526fa0d10f4cdb1db1dd6dc6c277fae74719bc7ea73b536ea16c389e3fe436
-PHP_IMAGE_7.3_cli=php:7.3-cli-bullseye@sha256:bd6f2dc7a4e4537e927355c94a74c3022911aa504278f5f0fd94016c90dfaecc
-PHP_IMAGE_7.3_fpm=php:7.3-fpm-bullseye@sha256:2d68e401d2d3b9f8a6572791cd7a25062450c43ff52e58391146809741ad0885
+PHP_IMAGE_7.1_cli=php:7.4-cli-buster@sha256:3ebd5d734b88b066c1d4c29833e90195469cebb8059f6bc3129350076c8be68e
+PHP_IMAGE_7.1_fpm=php:7.4-fpm-buster@sha256:3609fe303ed0cca8d86d274e9bc110d3b07ce0bda1e83c8e489b6fc59581fb93
+PHP_IMAGE_7.3_cli=php:7.4-cli-bullseye@sha256:9ad19bbf4ae4367f8cf8016e194f3f4b1855c6c3b7577418ca869b4ee273a65b
+PHP_IMAGE_7.3_fpm=php:7.4-fpm-bullseye@sha256:776f10bf1cf29c4b2ca81247f633e8b3c1385966ad888eef96ac5abb847c0c2f
 PHP_IMAGE_7.4_cli=php:7.4-cli-bullseye@sha256:9ad19bbf4ae4367f8cf8016e194f3f4b1855c6c3b7577418ca869b4ee273a65b
 PHP_IMAGE_7.4_fpm=php:7.4-fpm-bullseye@sha256:409806b7e9121bf4e5d7a4e06b367b70006f653dc15072c135916a2e6686da0b
 PHP_IMAGE_8.0_cli=php:8.0-cli-bullseye@sha256:60308db8546b73c9828ea7159b26b449055d9381ffd407e9fe1980e8d16d6495
