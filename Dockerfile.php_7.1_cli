@@ -1,4 +1,4 @@
-FROM php:7.1.33-cli-buster
+FROM php:8.1.9-cli-buster
 
 RUN apt-get update && apt-get install gnupg2 -y --no-install-recommends
 RUN docker-php-ext-install opcache
