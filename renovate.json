@@ -15,5 +15,11 @@
   "includePaths": [
     "php_image_digests.txt",
     ".github/**"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "major"],
+      "enabled": false
+    }
   ]
 }
