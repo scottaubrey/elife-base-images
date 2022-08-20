@@ -12,7 +12,7 @@
       "datasourceTemplate": "docker"
     }
   ],
-  "IncludePaths": [
+  "includePaths": [
     "php_image_digests.txt",
     ".github/**"
   ]
