@@ -8,7 +8,7 @@
   "regexManagers": [
     {
       "fileMatch": ["^php_image_digests.txt"],
-      "matchStrings": ["PHP_IMAGE_.+=(?<depName>.*?):(?<currentValue>.*?)@(?<currentDigest>sha256:[a-f0-9]+)s"],
+      "matchStrings": ["PHP_IMAGE_.+=(?<depName>.*?):(?<currentValue>.*?)@(?<currentDigest>sha256:[a-f0-9]+)"],
       "depNameTemplate": "docker",
       "datasourceTemplate": "docker"
     }
