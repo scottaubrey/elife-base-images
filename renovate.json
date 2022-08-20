@@ -11,5 +11,9 @@
       "matchStrings": ["PHP_IMAGE_.+=(?<depName>.*?):(?<currentValue>.*?)@(?<currentDigest>sha256:[a-f0-9]+)"],
       "datasourceTemplate": "docker"
     }
+  ],
+  "IncludePaths": [
+    "php_image_digests.txt",
+    ".github/**"
   ]
 }
