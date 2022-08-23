@@ -21,5 +21,6 @@
       "matchUpdateTypes": ["minor", "major"],
       "enabled": false
     }
-  ]
+  ],
+  "automerge": true
 }
