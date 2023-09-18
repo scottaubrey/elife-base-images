@@ -12,7 +12,6 @@ RUN /root/scripts/setup-users-paths.sh
 ENV PATH=/srv/bin:${PATH}
 
 COPY --chown=elife:elife utils/ /srv/bin/
-RUN /root/scripts/install-newrelic-php.sh
 
 COPY config/php-7.1-elife.ini ${PHP_INI_DIR}/conf.d/elife.ini
 COPY config/php-7.1-elife-fpm.ini ${PHP_INI_DIR}/conf.d/elife-fpm.ini
