@@ -6,8 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: scottaubrey/elifesciences-
-
+  REPO_PREFIX: scottaubrey/elifesciences-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -34,4 +33,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: run docker buildx and push images
-        run: make COMMIT=${GITHUB_SHA} REPO_PREFIX=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} buildx-and-push-php-${{ matrix.php_version }}
+        run: make COMMIT=${GITHUB_SHA} REPO_PREFIX=${{ env.REGISTRY }}/${{ env.REPO_PREFIX }} buildx-and-push-php-${{ matrix.php_version }}
